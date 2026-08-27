@@ -1,0 +1,28 @@
+# uv / venv
+.venv/
+.python-version.local
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Secrets — NEVER commit
+.env
+.env.*
+!.env.example
