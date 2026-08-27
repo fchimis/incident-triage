@@ -16,6 +16,11 @@ dist/
 htmlcov/
 coverage.xml
 
+# Local demo recordings are hosted externally and linked from README
+Recording.mp4
+*.mov
+*.webm
+
 # Editor
 .vscode/
 .idea/

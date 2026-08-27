@@ -29,6 +29,14 @@ so it can be tested without an API key.
 
 ---
 
+## Demo recording
+
+Watch the walkthrough recording here:
+
+[Incident triage demo recording](https://drive.google.com/file/d/1AGrqFSZbuwlLVjGRV-Xv2ewSElmymp0O/view?usp=sharing)
+
+---
+
 ## Project layout
 
 ```
