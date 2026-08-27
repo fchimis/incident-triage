@@ -38,7 +38,7 @@ solution/
 ├── .gitignore
 ├── README.md                   # this file
 ├── docs/
-│   └── architecture.html       # GCP diagram (open in a browser)
+│   └── architecture.md         # GCP architecture Mermaid diagram
 ├── src/
 │   └── incident_triage/        # src-layout package
 │       ├── __init__.py
@@ -54,7 +54,7 @@ solution/
 │   └── run_demo.py             # `python scripts/run_demo.py` still works
 ├── data/
 │   └── golden_incidents.jsonl  # labelled eval cases
-└── tests/                      # 21 pytest tests, all passing offline
+└── tests/                      # 26 pytest tests, all passing offline
     ├── conftest.py
     ├── test_schemas.py
     ├── test_redaction.py
@@ -207,7 +207,8 @@ correct_deferrals      : 0.429   ← by design: we defer conservatively
 
 ## Part 3 — Production design on GCP
 
-Open `docs/architecture.html` for the styled diagram. Same source, inline:
+Open `docs/architecture.md` for the polished Mermaid architecture diagram.
+Compact version:
 
 ```mermaid
 flowchart TB
@@ -393,7 +394,7 @@ agent owns end-to-end.
 ## What is deliberately not here
 
 * No real cloud infrastructure — the challenge says to mock it, and I
-  focused effort on the workflow instead. `docs/architecture.html` shows
+  focused effort on the workflow instead. `docs/architecture.md` shows
   how the pieces would connect.
 * No fine-tuning or embedding-based retrieval — for triage a well-designed
   prompt over Gemini flash is the right first step; fine-tuning is only
