@@ -6,8 +6,23 @@ auditable: every Gemini call is schema-constrained, every risky case can defer
 to a reviewer, and reviewer decisions feed the evaluation loop.
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Inter, Segoe UI, Arial, sans-serif",
+    "fontSize": "19px",
+    "primaryTextColor": "#0f172a",
+    "lineColor": "#334155"
+  },
+  "flowchart": {
+    "htmlLabels": true,
+    "nodeSpacing": 85,
+    "rankSpacing": 90,
+    "curve": "basis"
+  }
+}}%%
 %% GCP incident-triage architecture for GitHub Markdown rendering.
-flowchart LR
+flowchart TB
     classDef source fill:#f8fafc,stroke:#64748b,stroke-width:1.3px,color:#0f172a;
     classDef service fill:#eef2ff,stroke:#4f46e5,stroke-width:1.6px,color:#0f172a;
     classDef gemini fill:#f3e8ff,stroke:#7e22ce,stroke-width:2.2px,color:#0f172a;
@@ -17,7 +32,7 @@ flowchart LR
     classDef observe fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#082f49;
 
     subgraph Ingest["1. Ingest"]
-        direction TB
+        direction LR
         SRC["ITSM / Email / API"]:::source
         API["Cloud Run<br/>Ingest API"]:::service
         RAW[("GCS Raw Bucket<br/>CMEK + retention")]:::data
@@ -25,21 +40,21 @@ flowchart LR
     end
 
     subgraph Prepare["2. Prepare"]
-        direction TB
+        direction LR
         WORKER["Cloud Run<br/>Triage Worker"]:::service
         DLP["Cloud DLP<br/>PII inspection"]:::service
         SECRETS["Secret Manager<br/>service credentials"]:::service
     end
 
     subgraph Reason["3. Reason with Gemini"]
-        direction TB
+        direction LR
         FLASH["Gemini Flash<br/>primary triage"]:::gemini
         PRO["Gemini Pro<br/>low-confidence fallback"]:::gemini
         GUARD["Pipeline Guardrails<br/>schema + safety overrides"]:::service
     end
 
     subgraph Route["4. Persist and Route"]
-        direction TB
+        direction LR
         BQ[("BigQuery<br/>triage.results")]:::data
         OUT["Pub/Sub<br/>incidents.triaged"]:::service
         REVIEW["Human Review Queue<br/>deferred + sampled cases"]:::human
@@ -47,7 +62,7 @@ flowchart LR
     end
 
     subgraph Operate["5. Monitor and Improve"]
-        direction TB
+        direction LR
         LOGS["Cloud Logging<br/>structured events"]:::observe
         MON["Cloud Monitoring<br/>latency, errors, deferrals"]:::observe
         JUDGE["Gemini Pro as Judge<br/>nightly quality scoring"]:::gemini
